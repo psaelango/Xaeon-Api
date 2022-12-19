@@ -1,0 +1,487 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Utherverse Flow API Integration",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/"
+    }
+  ],
+  "paths": {
+    "/api/namedata/{ndid}": {
+      "get": {
+        "summary": "Retrieve a single namedata",
+        "tags": [
+          "Flow Basic Operations"
+        ],
+        "parameters": [
+          {
+            "name": "ndid",
+            "in": "path",
+            "description": "ndid of the namedata",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 42
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single namedata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/namedata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/namedata": {
+      "post": {        
+        "summary": "Create a new namedata",
+        "tags": [
+          "Flow Basic Operations"
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ndid": {
+                    "type": "integer"
+                  },
+                  "properties": {
+                    "type": "object"
+                  }
+                },
+                "example": {
+                  "ndid": 42,
+                  "properties": {
+                    "avatar_name": "Prasanna Elangovan",
+                    "display_badge": "Server Dev"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Single namedata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/namedata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/mnic": {
+      "post": {        
+      "summary": "Create a new mnemonic",
+      "tags": [
+        "Flow Basic Operations"
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Mnemonic_Name"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Single mnemonic"
+        },
+        "default": {
+          "description": "Unexpected error"
+        }
+      }
+      }
+    },
+    "/api/labelgroup/{groupname}": {
+      "get": {
+        "summary": "Retrieve the hierarchy list",
+        "tags": [
+          "Flow Basic Operations"
+        ],
+        "parameters": [
+          {
+            "name": "groupname",
+            "in": "path",
+            "description": "groupname of the list",
+            "schema": {
+              "type": "string",
+              "example": "badges"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hierarchy list",
+            "content": {
+              "application/json": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/labelgroup": {
+      "post": {        
+      "summary": "Add item to the hierarchy",
+      "tags": [
+        "Flow Basic Operations"
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "groupname": {
+                  "type": "string",
+                  "example": "badges"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Admin"
+                }
+              },
+              "required": ["groupname", "name"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Single namedata"
+        },
+        "400": {
+          "description": "The specified ndid is invalid"
+        },
+        "default": {
+          "description": "Unexpected error"
+        }
+      }
+      }
+    },
+    "/api/ndrelation/{fromId}/{toId}": {
+      "get": {
+        "summary": "Retrieve relations between namedata objects",
+        "tags": [
+          "Flow Basic Operations"
+        ],
+        "parameters": [
+          {
+            "name": "fromId",
+            "in": "path",
+            "description": "relation from namedata",
+            "schema": {
+              "type": "integer",
+              "example": 42
+            },
+            "required": true
+          },
+          {
+            "name": "toId",
+            "in": "path",
+            "description": "relation to namedata",
+            "schema": {
+              "type": "integer",
+              "example": 36
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relationship list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ndrelation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/api/ndrelation": {
+      "post": {        
+      "summary": "Create multiple relations between namedata objects",
+      "tags": [
+        "Flow Basic Operations"
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "from_ndid": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 42
+                },
+                "relation": {
+                  "type": "string",
+                  "example": "active_badge"
+                },
+                "to_ndid": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 34
+                }
+              },
+              "required": ["groupname", "name"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Single namedata"
+        },
+        "400": {
+          "description": "The specified ndid is invalid"
+        },
+        "default": {
+          "description": "Unexpected error"
+        }
+      }
+      }
+    },
+    "/v1/badges/list": {
+      "get": {
+        "summary": "Retrieve list of badges",
+        "tags": [
+          "Badges API"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of badges",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/labelgroup"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/v1/badges/{badgeId}": {
+      "get": {
+        "summary": "Retrieve Single Badge Information",
+        "tags": [
+          "Badges API"
+        ],
+        "parameters": [
+          {
+            "name": "badgeId",
+            "in": "path",
+            "description": "badge id",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 34
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Single Badge Information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/namedata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/v1/badges/user/{userId}": {
+      "get": {
+        "summary": "Retrieve User Badges Information",
+        "tags": [
+          "Badges API"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user id",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 42
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Badges List Information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/namedata"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The specified ndid is invalid"
+          },
+          "default": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "namedata": {
+        "properties": {
+          "creationdate": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1671450590
+          },
+          "lastupdate": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1671450590
+          },
+          "ndid": {
+            "type": "integer",
+            "format": "int64",
+            "example": 5
+          },
+          "sid": {
+            "type": "integer",
+            "format": "int64",
+            "example": 5
+          },
+          "parent": {
+            "type": "integer",
+            "format": "int64",
+            "example": 5
+          },
+          "properties": {
+            "type": "object"
+          }
+        }
+      },
+      "labelgroup": {
+        "properties": {
+          "groupname": {
+            "type": "string"
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ndrelation": {
+        "properties": {
+          "groupname": {
+            "type": "string"
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            },
+            "example": [
+              ["active_badge", 59]
+            ]
+          }
+        }
+      }
+    }
+  }
+}
